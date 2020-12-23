@@ -1,0 +1,19 @@
+- targets: ["10.30.202.8"]
+  labels:
+    device_type: "hpe"
+    hostname: "test_node"
+
+- targets: ["10.30.14.41"]
+  labels:
+    device_type: "hpe"
+    hostname: "cohesity_node_1"
+
+- targets: ["10.30.14.42"]
+  labels:
+    device_type: "hpe"
+    hostname: "cohesity_node_2"
+
+- targets: ["10.30.14.43"]
+  labels:
+    device_type: "hpe"
+    hostname: "cohesity_node_3"

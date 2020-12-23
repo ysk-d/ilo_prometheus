@@ -1,0 +1,39 @@
+version: '3.2'
+
+services:
+  snmp_exporter:
+    container_name: snmp_exporter
+    image: prom/snmp-exporter
+    ports:
+      - "9116:9116"
+    volumes:
+      - "./snmp_exporter/snmp_v2.yml:/etc/snmp_exporter/snmp.yml"
+      #- "./snmp_exporter/snmp_v3.yml:/etc/snmp_exporter/snmp.yml"
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    depends_on:
+      - snmp_exporter
+    volumes:
+      - 'prometheus_data:/prometheus'
+      - './prometheus:/etc/prometheus'
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    env_file:
+      - ./grafana/config.monitoring
+    volumes:
+      - './grafana/provisioning/:/etc/grafana/provisioning/'
+      - 'grafana_data:/var/lib/grafana'
+
+volumes:
+    prometheus_data: {}
+    grafana_data: {}
